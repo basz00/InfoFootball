@@ -5,6 +5,8 @@ plugins {
     kotlin("kapt")
 }
 
+val composeVersion = rootProject.extra.get("composeVersion") as String
+
 android {
     namespace = "com.baz.infofootball"
     compileSdk = 33
@@ -42,7 +44,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.1"
+        kotlinCompilerExtensionVersion = composeVersion
     }
     packagingOptions {
         resources {
@@ -52,7 +54,7 @@ android {
 }
 
 dependencies {
-    val composeVersion = rootProject.extra.get("composeVersion")
+    val retrofitVersion = rootProject.extra.get("retrofitVersion")
     val coreKtxVersion = rootProject.extra.get("coreKtxVersion")
     val lifecycleRuntimeKtxVersion = rootProject.extra.get("lifecycleRuntimeKtxVersion")
     val activityComposeVersion = rootProject.extra.get("activityComposeVersion")
@@ -61,13 +63,25 @@ dependencies {
     val androidJUnitVersion = rootProject.extra.get("androidJUnitVersion")
     val espressoVersion = rootProject.extra.get("espressoVersion")
     val daggerHiltVersion = rootProject.extra.get("daggerHiltVersion")
+    val composeNavigationVersion = rootProject.extra.get("composeNavigationVersion")
+    val coilVersion = rootProject.extra.get("coilVersion")
+    val composeViewModelVersion = rootProject.extra.get("composeViewModelVersion")
+
+    implementation(project(mapOf("path" to ":feature:standings")))
+    implementation(project(mapOf("path" to ":core:ui")))
+    implementation(project(mapOf("path" to ":data:standings")))
 
     implementation("androidx.core:core-ktx:${coreKtxVersion}")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:${lifecycleRuntimeKtxVersion}")
+
+    //compose
     implementation("androidx.activity:activity-compose:${activityComposeVersion}")
     implementation("androidx.compose.ui:ui:$composeVersion")
     implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
     implementation("androidx.compose.material3:material3:${composeMaterial3Version}")
+    implementation("androidx.navigation:navigation-compose:${composeNavigationVersion}")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:${composeViewModelVersion}")
+
     testImplementation("junit:junit:${jUnitVersion}")
     androidTestImplementation("androidx.test.ext:junit:${androidJUnitVersion}")
     androidTestImplementation("androidx.test.espresso:espresso-core:${espressoVersion}")
@@ -78,6 +92,13 @@ dependencies {
     //dagger-hilt
     implementation("com.google.dagger:hilt-android:${daggerHiltVersion}")
     kapt("com.google.dagger:hilt-compiler:${daggerHiltVersion}")
+
+    //coil
+    implementation("io.coil-kt:coil-compose:$coilVersion")
+
+    //retrofit
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 }
 
 kapt {

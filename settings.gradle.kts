@@ -14,3 +14,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "InfoFootball"
 include(":app")
+include(":core:ui")
+include(":core:network")
+include(":data:standings")
+include(":feature:standings")
